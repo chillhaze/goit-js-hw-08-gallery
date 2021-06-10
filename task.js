@@ -11,9 +11,8 @@ gallery.insertAdjacentHTML("beforeend", createMarkup);
 
 gallery.addEventListener("click", onGalleryItemClick);
 closeBtn.addEventListener("click", closeModal);
-modal.addEventListener("click", closeModalOnBackdropClick);
-window.addEventListener("keydown", closeModalOnEscBtnPush);
-window.addEventListener("keydown", changeImg);
+// modal.addEventListener("click", closeModalOnBackdropClick);
+modalBackdrop.addEventListener("click", closeModal);
 
 function createGalleryMarkup(cards) {
   return cards
@@ -48,27 +47,23 @@ function onGalleryItemClick(evt) {
   modal.classList.add("is-open");
   currentImage.src = evt.target.dataset.source;
   currentImage.alt = evt.target.alt;
+
+  window.addEventListener("keydown", closeModalOnEscBtnPush);
+  window.addEventListener("keydown", changeImg);
 }
 
 function closeModal() {
   modal.classList.remove("is-open");
   currentImage.src = "";
   currentImage.alt = "";
-}
 
-function closeModalOnBackdropClick(evt) {
-  if (evt.target === modalBackdrop) {
-    modal.classList.remove("is-open");
-    currentImage.src = "";
-    currentImage.alt = "";
-  }
+  window.removeEventListener("keydown", closeModalOnEscBtnPush);
+  window.removeEventListener("keydown", changeImg);
 }
 
 function closeModalOnEscBtnPush(evt) {
   if (evt.code === "Escape") {
-    modal.classList.remove("is-open");
-    currentImage.src = "";
-    currentImage.alt = "";
+    closeModal();
   }
 }
 
