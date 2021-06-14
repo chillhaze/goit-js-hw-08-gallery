@@ -11,10 +11,10 @@ gallery.insertAdjacentHTML("beforeend", createMarkup);
 
 gallery.addEventListener("click", onGalleryItemClick);
 closeBtn.addEventListener("click", closeModal);
-// modal.addEventListener("click", closeModalOnBackdropClick);
 modalBackdrop.addEventListener("click", closeModal);
 
 function createGalleryMarkup(cards) {
+  let cardIndex = 1;
   return cards
     .map(({ preview, original, description }) => {
       return `
@@ -27,6 +27,7 @@ function createGalleryMarkup(cards) {
         class="gallery__image"
         src="${preview}"
         data-source="${original}"
+        data-index="${cardIndex++}"
         alt="${description}"
       />
     </a>
@@ -47,6 +48,7 @@ function onGalleryItemClick(evt) {
   modal.classList.add("is-open");
   currentImage.src = evt.target.dataset.source;
   currentImage.alt = evt.target.alt;
+  currentImage.dataset.index = evt.target.dataset.index;
 
   window.addEventListener("keydown", closeModalOnEscBtnPush);
   window.addEventListener("keydown", changeImg);
@@ -70,4 +72,45 @@ function closeModalOnEscBtnPush(evt) {
 function changeImg(evt) {
   const nextImg = evt.code === "ArrowRight";
   const prevImg = evt.code === "ArrowLeft";
+  let currentIndex = Number(currentImage.dataset.index);
+  // console.log(currentIndex);
+  if (nextImg) {
+    if (currentIndex > 0 && currentIndex < 9) {
+      currentIndex += 1;
+
+      let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
+      // console.log(newImg);
+      currentImage.src = newImg.dataset.source;
+      currentImage.alt = newImg.alt;
+      currentImage.dataset.index = newImg.dataset.index;
+    } else if (currentIndex === 9) {
+      currentIndex = 1;
+      // currentIndex += 1;
+
+      let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
+      // console.log(newImg);
+      currentImage.src = newImg.dataset.source;
+      currentImage.alt = newImg.alt;
+      currentImage.dataset.index = newImg.dataset.index;
+    }
+  } else if (prevImg) {
+    if (currentIndex > 1 && currentIndex <= 9) {
+      currentIndex -= 1;
+
+      let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
+      // console.log(newImg);
+      currentImage.src = newImg.dataset.source;
+      currentImage.alt = newImg.alt;
+      currentImage.dataset.index = newImg.dataset.index;
+    } else if (currentIndex === 1) {
+      currentIndex = 9;
+      // currentIndex -= 1;
+
+      let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
+      // console.log(newImg);
+      currentImage.src = newImg.dataset.source;
+      currentImage.alt = newImg.alt;
+      currentImage.dataset.index = newImg.dataset.index;
+    }
+  }
 }
