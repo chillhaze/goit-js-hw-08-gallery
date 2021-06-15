@@ -75,7 +75,7 @@ function changeImg(evt) {
   let currentIndex = Number(currentImage.dataset.index);
   // console.log(currentIndex);
   if (nextImg) {
-    if (currentIndex > 0 && currentIndex < 9) {
+    if (currentIndex > 0 && currentIndex < defaultExport.length) {
       currentIndex += 1;
 
       let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
@@ -83,7 +83,7 @@ function changeImg(evt) {
       currentImage.src = newImg.dataset.source;
       currentImage.alt = newImg.alt;
       currentImage.dataset.index = newImg.dataset.index;
-    } else if (currentIndex === 9) {
+    } else if (currentIndex === defaultExport.length) {
       currentIndex = 1;
       // currentIndex += 1;
 
@@ -94,7 +94,7 @@ function changeImg(evt) {
       currentImage.dataset.index = newImg.dataset.index;
     }
   } else if (prevImg) {
-    if (currentIndex > 1 && currentIndex <= 9) {
+    if (currentIndex > 1 && currentIndex <= defaultExport.length) {
       currentIndex -= 1;
 
       let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
@@ -103,7 +103,7 @@ function changeImg(evt) {
       currentImage.alt = newImg.alt;
       currentImage.dataset.index = newImg.dataset.index;
     } else if (currentIndex === 1) {
-      currentIndex = 9;
+      currentIndex = defaultExport.length;
       // currentIndex -= 1;
 
       let newImg = document.querySelector(`img[data-index='${currentIndex}']`);
